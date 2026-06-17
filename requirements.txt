@@ -1,3 +1,7 @@
 flask
 gunicorn
+<<<<<<< HEAD
 werkzeug
+=======
+werkzeug
+>>>>>>> 2e994c22babb39957ea17dc8ed595bcddeb2f926

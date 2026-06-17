@@ -5,7 +5,11 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+<<<<<<< HEAD
 app.secret_key = "tf-agrotech-excluir-atualizado-2026"
+=======
+app.secret_key = "tf-agrotech-cadastro-fazenda-2026"
+>>>>>>> 2e994c22babb39957ea17dc8ed595bcddeb2f926
 DB_NAME = "banco.db"
 BACKUP_DIR = "backups"
 
@@ -113,9 +117,12 @@ def login_obrigatorio(f):
 def propriedade_atual():
     return session.get("propriedade_id")
 
+<<<<<<< HEAD
 def somente_admin():
     return session.get("usuario_perfil") == "Administradora"
 
+=======
+>>>>>>> 2e994c22babb39957ea17dc8ed595bcddeb2f926
 @app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "POST":
@@ -144,21 +151,43 @@ def login():
 @app.route("/criar_conta_fazenda", methods=["GET","POST"])
 def criar_conta_fazenda():
     if request.method == "POST":
+<<<<<<< HEAD
+=======
+        nome_fazenda = request.form.get("nome_fazenda")
+        cidade = request.form.get("cidade")
+        estado = request.form.get("estado")
+        responsavel = request.form.get("responsavel")
+        telefone = request.form.get("telefone")
+        email = request.form.get("email")
+        senha = request.form.get("senha")
+
+>>>>>>> 2e994c22babb39957ea17dc8ed595bcddeb2f926
         banco = conectar()
         try:
             banco.execute("""INSERT INTO propriedades (nome,cidade,estado,responsavel,telefone,criado_em)
                              VALUES (?,?,?,?,?,?)""",
+<<<<<<< HEAD
                           (request.form.get("nome_fazenda"), request.form.get("cidade"), request.form.get("estado"),
                            request.form.get("responsavel"), request.form.get("telefone"),
+=======
+                          (nome_fazenda, cidade, estado, responsavel, telefone,
+>>>>>>> 2e994c22babb39957ea17dc8ed595bcddeb2f926
                            datetime.now().strftime("%d/%m/%Y %H:%M")))
             propriedade_id = banco.execute("SELECT last_insert_rowid()").fetchone()[0]
 
             banco.execute("""INSERT INTO usuarios (nome,email,senha,perfil,propriedade_id,criado_em)
                              VALUES (?,?,?,?,?,?)""",
+<<<<<<< HEAD
                           (request.form.get("responsavel"), request.form.get("email"),
                            generate_password_hash(request.form.get("senha")),
                            "Administradora", propriedade_id,
                            datetime.now().strftime("%d/%m/%Y %H:%M")))
+=======
+                          (responsavel, email, generate_password_hash(senha),
+                           "Administradora", propriedade_id,
+                           datetime.now().strftime("%d/%m/%Y %H:%M")))
+
+>>>>>>> 2e994c22babb39957ea17dc8ed595bcddeb2f926
             banco.commit()
             banco.close()
             flash("Conta da fazenda criada com sucesso! Faça login.")
@@ -220,10 +249,13 @@ def dashboard():
 @login_obrigatorio
 def cadastro_usuario():
     pid = propriedade_atual()
+<<<<<<< HEAD
     if not somente_admin():
         flash("Apenas administradores podem criar usuários.")
         return redirect(url_for("usuarios"))
 
+=======
+>>>>>>> 2e994c22babb39957ea17dc8ed595bcddeb2f926
     if request.method == "POST":
         banco = conectar()
         try:
@@ -249,6 +281,7 @@ def usuarios():
     banco.close()
     return render_template("usuarios.html", usuarios=usuarios)
 
+<<<<<<< HEAD
 @app.route("/excluir_usuario/<int:id>")
 @login_obrigatorio
 def excluir_usuario(id):
@@ -267,6 +300,8 @@ def excluir_usuario(id):
     flash("Usuário excluído com sucesso.")
     return redirect(url_for("usuarios"))
 
+=======
+>>>>>>> 2e994c22babb39957ea17dc8ed595bcddeb2f926
 @app.route("/propriedade")
 @login_obrigatorio
 def propriedade():
@@ -321,6 +356,7 @@ def gastos():
     banco.close()
     return render_template("gastos.html", gastos=gastos, total_gastos=total_gastos)
 
+<<<<<<< HEAD
 @app.route("/excluir_gasto/<int:id>")
 @login_obrigatorio
 def excluir_gasto(id):
@@ -330,6 +366,8 @@ def excluir_gasto(id):
     banco.close()
     return redirect(url_for("gastos"))
 
+=======
+>>>>>>> 2e994c22babb39957ea17dc8ed595bcddeb2f926
 @app.route("/saidas", methods=["GET","POST"])
 @login_obrigatorio
 def saidas():
@@ -349,6 +387,7 @@ def saidas():
     banco.close()
     return render_template("saidas.html", saidas=saidas, total_saidas=total_saidas)
 
+<<<<<<< HEAD
 @app.route("/excluir_saida/<int:id>")
 @login_obrigatorio
 def excluir_saida(id):
@@ -358,6 +397,8 @@ def excluir_saida(id):
     banco.close()
     return redirect(url_for("saidas"))
 
+=======
+>>>>>>> 2e994c22babb39957ea17dc8ed595bcddeb2f926
 @app.route("/producao", methods=["GET","POST"])
 @login_obrigatorio
 def producao():
@@ -376,6 +417,7 @@ def producao():
     banco.close()
     return render_template("producao.html", producoes=producoes)
 
+<<<<<<< HEAD
 @app.route("/excluir_producao/<int:id>")
 @login_obrigatorio
 def excluir_producao(id):
@@ -385,6 +427,8 @@ def excluir_producao(id):
     banco.close()
     return redirect(url_for("producao"))
 
+=======
+>>>>>>> 2e994c22babb39957ea17dc8ed595bcddeb2f926
 @app.route("/relatorios")
 @login_obrigatorio
 def relatorios():
